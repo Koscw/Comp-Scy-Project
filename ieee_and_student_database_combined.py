@@ -80,6 +80,9 @@ import json
 database_filename = "student_database.txt"
 with open(database_filename) as file:
     students_file = json.load(file)
+sorted_database_filename = "student_database_sorted.txt"
+with open(sorted_database_filename) as file:
+    sorted_students_file = json.load(file)
 
 
 def add(new_student):
@@ -271,11 +274,30 @@ def show_all_students_id_btn():
         except ValueError:
             messagebox.showerror('Input is invalid', 'Input is invalid')
 
+    # Create a button to display the text of entry widget
+    button = ttk.Button(win, text="Show All Students", command=show_all_students)
+    button.pack()
+    win.mainloop()
 
+def show_sorted_database():
+    win = Tk()
+    # Set the geometry of tkinter frame
+    win.geometry("750x250")
 
+    def show_students():
+        lst = []
+        for strings in sorted_students_file:
+            lst.append(strings)
+            lst.append(sorted_students_file[strings])
+            lst.append('\n')
+        return lst
 
-
-
+    def show_all_students():
+        try:
+            stud_value = show_students()
+            Label(win, text=stud_value, font=('Century 15 bold')).pack(pady=20)
+        except ValueError:
+            messagebox.showerror('Input is invalid', 'Input is invalid')
 
     # Create a button to display the text of entry widget
     button = ttk.Button(win, text="Show All Students", command=show_all_students)
@@ -446,6 +468,9 @@ def NumberSystemConverter():
 def FibonacciFac2():
     from subprocess import call
     call(["python", "FibonacciFactorial.py"])
+def StudentSorter2():
+    from subprocess import call
+    call(["python", "StudentSorter2.py"])
 
 btn = Button(text="Number System Converter",
              background="#555",
@@ -458,7 +483,7 @@ btn = Button(text="Number System Converter",
              )
 btn.pack()
 
-btn = Button(text="Conversion",
+btn = Button(text="Fibonacci and Factorial",
              background="#555",
              foreground="#ccc",
              padx="20",
@@ -536,6 +561,27 @@ btn = Button(text="Add New Student To Database",
              font="16",
              width = "40",
              command = add_new_student_btn
+             )
+btn.pack()
+
+btn = Button(text="Student Database Sorter",
+             background="#555",
+             foreground="#ccc",
+             padx="20",
+             pady="8",
+             font="16",
+             width = "40",
+             command = StudentSorter2
+             )
+btn.pack()
+btn = Button(text="Show all Students (sorted)",
+             background="#555",
+             foreground="#ccc",
+             padx="20",
+             pady="8",
+             font="16",
+             width = "40",
+             command = show_sorted_database
              )
 btn.pack()
 
