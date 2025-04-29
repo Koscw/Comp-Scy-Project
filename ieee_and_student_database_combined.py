@@ -83,6 +83,9 @@ with open(database_filename) as file:
 sorted_database_filename = "student_database_sorted.txt"
 with open(sorted_database_filename) as file:
     sorted_students_file = json.load(file)
+student_requests_file = "student_request.txt"
+with open(student_requests_file) as student_file:
+    student_requests = json.load(student_file)
 
 
 def add(new_student):
@@ -461,6 +464,90 @@ root = Tk()
 root.title("Assistant")
 root.geometry("550x500")
 
+def add_new_student_request_btn():
+
+
+    win = Tk()
+    # Set the geometry of tkinter frame
+    win.geometry("750x250")
+
+    def add_request(new_student_id , student_message):
+        new_student_id = str(new_student_id)
+        student_message = str(student_message)
+
+        new_student = {new_student_id:{
+            "Student Id": new_student_id,
+             "Student Message":student_message}}
+        student_requests.update(new_student)
+
+        with open(student_requests_file, 'w') as f :
+            json.dump(student_requests, f, sort_keys=True, indent=4)
+        return "Success"
+
+
+
+
+
+
+    def add_new_request():
+            stud_id_name = entry_name_or_id.get()
+            stud_name = entry_student_name.get()
+
+            stud_value = add_request(stud_id_name,stud_name)
+            Label(win, text=stud_value, font=('Century 15 bold')).pack(pady=20)
+
+
+    # Create an Entry Widget
+
+    label = ttk.Label(win, text='Enter Students Id')
+    label.pack()
+    entry_name_or_id = ttk.Entry(win, font=('Century 12'), width=40,)
+    entry_name_or_id.pack(pady=30)
+    label = ttk.Label(win, text='Enter Students Message')
+    label.pack()
+    entry_student_name = ttk.Entry(win, font=('Century 12'), width=40, )
+    entry_student_name.pack(pady=30)
+
+    # Create a button to display the text of entry widget
+    button = ttk.Button(win, text="Enter", command=add_new_request)
+
+    button.pack()
+    win.mainloop()
+
+def show_all_student_requests_btn():
+    win = Tk()
+    # Set the geometry of tkinter frame
+    win.geometry("750x250")
+    def show_students_requests():
+        lst = []
+        for strings in student_requests:
+            lst.append(strings)
+            lst.append(student_requests[strings])
+            lst.append('\n')
+        return lst
+    def show_all_students():
+        try:
+
+            stud_value = show_students_requests()
+            Label(win, text=stud_value, font=('Century 15 bold')).pack(pady=20)
+        except ValueError:
+            messagebox.showerror('Input is invalid', 'Input is invalid')
+
+
+
+
+
+
+
+    # Create a button to display the text of entry widget
+    button = ttk.Button(win, text="Show All Students", command=show_all_students)
+    button.pack()
+    win.mainloop()
+
+
+
+
+
 def NumberSystemConverter():
     from subprocess import call
     call(["python", "NumberSystemConverter3.py"])
@@ -503,16 +590,7 @@ btn = Button(text="Ieee",
              command = ieee_btn
              )
 btn.pack()
-btn = Button(text="Recursive - Functions",
-             background="#555",
-             foreground="#ccc",
-             padx="20",
-             pady="8",
-             font="16",
-             width = "40",
-             command = ieee_btn
-             )
-btn.pack()
+
 btn = Button(text="Student Search",
              background="#555",
              foreground="#ccc",
@@ -584,5 +662,26 @@ btn = Button(text="Show all Students (sorted)",
              command = show_sorted_database
              )
 btn.pack()
+btn = Button(text="Add New Student Request",
+             background="#555",
+             foreground="#ccc",
+             padx="20",
+             pady="8",
+             font="16",
+             width = "40",
+             command = add_new_student_request_btn
+             )
+btn.pack()
 
+
+btn = Button(text="Show all student requests",
+             background="#555",
+             foreground="#ccc",
+             padx="20",
+             pady="8",
+             font="16",
+             width = "40",
+             command = show_all_student_requests_btn
+             )
+btn.pack()
 root.mainloop()
