@@ -31,7 +31,6 @@ def Fibonacci ():
         t.set(f"Answer: {y}")
   except Exception as e:
     messagebox.showerror("Input Is Invalid", "Please enter a valid integer")
-  res_t.set("")
 
 def factorial(x):
   x=int(x)
