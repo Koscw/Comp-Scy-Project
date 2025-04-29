@@ -443,6 +443,10 @@ def NumberSystemConverter():
     from subprocess import call
     call(["python", "NumberSystemConverter3.py"])
 
+def FibonacciFac2():
+    from subprocess import call
+    call(["python", "FibonacciFactorial.py"])
+
 btn = Button(text="Number System Converter",
              background="#555",
              foreground="#ccc",
@@ -461,7 +465,7 @@ btn = Button(text="Conversion",
              pady="8",
              font="16",
              width = "40",
-             command = ieee_btn
+             command = FibonacciFac2
              )
 btn.pack()
 btn = Button(text="Ieee",
